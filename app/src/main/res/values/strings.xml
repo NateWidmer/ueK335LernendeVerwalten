@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Lernende Verwaltung</string>
     <string name="create_title">Lernende Erfassen</string>
+    <string name="pre_name_hint">Vorname</string>
+    <string name="last_name_hint">Nachname</string>
+    <string name="enterprise_hint">Firma</string>
+    <string name="content_description_avatar">Avatar</string>
 </resources>
