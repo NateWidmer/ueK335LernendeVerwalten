@@ -1,25 +1,23 @@
 <resources>
-    <!--Overview Page-->
+    <!--General-->
+    <string name="first_name">Vorname</string>
+    <string name="last_name">Nachname</string>
     <string name="app_name">Lernende Verwaltung</string>
-    <string name="firstName">Vorname</string>
-    <string name="LastName">Nachname</string>
     <string name="avatar_image_desc">Profilbild</string>
+    <!--Overview Page-->
     <string name="search_hint">Nach Lernenden suchen</string>
     <string name="search_title">Suchen</string>
     <!--Create Page-->
     <string name="create_title">Lernende Erfassen</string>
-    <string name="pre_name_hint">Vorname</string>
-    <string name="last_name_hint">Nachname</string>
-    <string name="enterprise_hint">Firma</string>
-    <string name="enterprise_default">Bitte wählen...</string>
-    <string name="content_description_avatar">Avatar</string>
-    <string name="enterprise_six">Six</string>
-    <string name="enterprise_google">Google</string>
-    <string name="enterprise_accenture">Accenture</string>
-    <string name="enterprise_crealogix">Crealogix</string>
-    <string name="enterprise_noseryoung">Noser Young</string>
-    <string name="enterprise_nosereng">Noser Engineering</string>
-    <string name="enterprise_frox">Frox</string>
+    <string name="company">Firma</string>
+    <string name="company_default">Bitte wählen...</string>
+    <string name="company_six">Six</string>
+    <string name="company_google">Google</string>
+    <string name="company_accenture">Accenture</string>
+    <string name="company_crealogix">Crealogix</string>
+    <string name="company_noseryoung">Noser Young</string>
+    <string name="company_nosereng">Noser Engineering</string>
+    <string name="company_frox">Frox</string>
     <string name="image_button">Foto Button</string>
     <string name="cancel_title">Abbrechen</string>
     <!--Detail View Page-->

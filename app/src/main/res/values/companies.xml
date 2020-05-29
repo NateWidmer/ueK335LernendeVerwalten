@@ -2,13 +2,13 @@
 
 <resources>
     <string-array name="companies">
-        <item>@string/enterprise_default</item>
-        <item>@string/enterprise_accenture</item>
-        <item>@string/enterprise_crealogix</item>
-        <item>@string/enterprise_frox</item>
-        <item>@string/enterprise_google</item>
-        <item>@string/enterprise_nosereng</item>
-        <item>@string/enterprise_noseryoung</item>
-        <item>@string/enterprise_six</item>
+        <item>@string/company_default</item>
+        <item>@string/company_accenture</item>
+        <item>@string/company_crealogix</item>
+        <item>@string/company_frox</item>
+        <item>@string/company_google</item>
+        <item>@string/company_nosereng</item>
+        <item>@string/company_noseryoung</item>
+        <item>@string/company_six</item>
     </string-array>
 </resources>

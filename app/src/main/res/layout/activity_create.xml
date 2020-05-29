@@ -40,7 +40,7 @@
             android:id="@+id/preNameInputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/pre_name_hint"
+            android:hint="@string/first_name"
             app:layout_constraintTop_toTopOf="parent" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -61,7 +61,7 @@
             android:id="@+id/lastNameInputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/last_name_hint"
+            android:hint="@string/last_name"
             android:textColorHighlight="@color/mainNOA" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -85,7 +85,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:background="@color/primaryDarkNOA"
-            android:contentDescription="@string/content_description_avatar"
+            android:contentDescription="@string/avatar_image_desc"
             android:scaleType="centerCrop"
             android:src="@drawable/avatar" />
 
@@ -113,7 +113,7 @@
         android:layout_marginStart="25dp"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="27dp"
-        android:text="@string/enterprise_hint"
+        android:text="@string/company"
         android:textColor="#CA7F7F7F"
         android:textColorHighlight="@color/mainNOA"
         android:textSize="18sp"
