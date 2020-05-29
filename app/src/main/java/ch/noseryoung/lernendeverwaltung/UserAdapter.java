@@ -58,7 +58,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserViewHolder> implements
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
                 for(User user : usersFull) {
-                    if (user.getFirstName().toLowerCase().contains(filterPattern)) {
+                    if (user.getFirstName().toLowerCase().contains(filterPattern) || user.getLastName().toLowerCase().contains(filterPattern)) {
                         filteredUsers.add(user);
                     }
                 }

@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         // use a linear layout manager
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         userView.setLayoutManager(linearLayoutManager);
-        UserAdapter userAdapter = new UserAdapter(data);
+        userAdapter = new UserAdapter(data);
         userView.setAdapter(userAdapter);
     }
 
@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
 
+        searchView.setQueryHint(getText(R.string.search_hint));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
