@@ -55,7 +55,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:contentDescription="@string/avatar_image_desc"
-                    android:src="@drawable/avatar" />
+                    app:srcCompat="@drawable/avatar" />
             </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
