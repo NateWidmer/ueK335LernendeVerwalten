@@ -13,4 +13,6 @@
     <string name="enterprise_noseryoung">Noser Young</string>
     <string name="enterprise_nosereng">Noser Engineering</string>
     <string name="enterprise_frox">Frox</string>
+    <string name="image_button">Foto Button</string>
+    <string name="cancel_title">Abbrechen</string>
 </resources>

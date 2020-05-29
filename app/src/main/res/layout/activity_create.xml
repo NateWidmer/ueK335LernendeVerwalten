@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:contentDescription="@string/image_button">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/saveButton"
@@ -13,14 +13,15 @@
         android:layout_marginEnd="18dp"
         android:layout_marginRight="18dp"
         android:layout_marginBottom="18dp"
+        android:background="#FFFFFF"
         android:clickable="true"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:src="@drawable/ic_done_black_24dp"
         app:backgroundTint="@color/mainNOA"
         app:elevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_done_black_24dp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayoutPreName"
@@ -66,24 +67,26 @@
         android:id="@+id/cardView"
         android:layout_width="195dp"
         android:layout_height="195dp"
-        android:layout_marginTop="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_centerInParent="true"
+        android:layout_marginTop="30dp"
         android:innerRadius="0dp"
         android:shape="ring"
         app:cardCornerRadius="95dp"
-        app:cardElevation="0dp">
+        app:cardElevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:background="@color/primaryDarkNOA"
             android:contentDescription="@string/content_description_avatar"
             android:scaleType="centerCrop"
-            android:src="@drawable/test" />
+            android:src="@drawable/avatar" />
+
     </androidx.cardview.widget.CardView>
 
     <Spinner
@@ -114,5 +117,19 @@
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayoutLastName" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="180dp"
+        android:contentDescription="@string/image_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/cardView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_camera_alt_black_24dp"
+        android:background="@drawable/rounded_corners"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
