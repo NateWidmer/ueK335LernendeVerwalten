@@ -34,7 +34,7 @@
         android:layout_marginRight="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView">
+        app:layout_constraintTop_toBottomOf="@+id/avatarFrame">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -64,7 +64,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
+        android:id="@+id/avatarFrame"
         android:layout_width="195dp"
         android:layout_height="195dp"
         android:layout_centerInParent="true"
@@ -78,7 +78,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/avatarPicture"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -127,7 +127,7 @@
         android:layout_marginTop="180dp"
         android:contentDescription="@string/image_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/cardView"
+        app:layout_constraintStart_toStartOf="@+id/avatarFrame"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_camera_alt_black_24dp"
         android:background="@drawable/rounded_corners"/>
