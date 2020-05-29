@@ -4,5 +4,13 @@
     <string name="pre_name_hint">Vorname</string>
     <string name="last_name_hint">Nachname</string>
     <string name="enterprise_hint">Firma</string>
+    <string name="enterprise_default">Bitte wählen...</string>
     <string name="content_description_avatar">Avatar</string>
+    <string name="enterprise_six">Six</string>
+    <string name="enterprise_google">Google</string>
+    <string name="enterprise_accenture">Accenture</string>
+    <string name="enterprise_crealogix">Crealogix</string>
+    <string name="enterprise_noseryoung">Noser Young</string>
+    <string name="enterprise_nosereng">Noser Engineering</string>
+    <string name="enterprise_frox">Frox</string>
 </resources>
