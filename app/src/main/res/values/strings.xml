@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Lernende Verwaltung</string>
+    <string name="firstName">Vorname</string>
+    <string name="LastName">Nachname</string>
+    <string name="avatar_image_desc">Profilbild</string>
+    <string name="search_hint">Nach Lernenden suchen</string>
+    <string name="search_title">Suchen</string>
 </resources>

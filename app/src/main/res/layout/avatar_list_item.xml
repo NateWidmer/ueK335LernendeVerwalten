@@ -17,7 +17,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="24dp"
-                android:text="Nachname"
+                android:text="@string/LastName"
                 app:layout_constraintStart_toEndOf="@+id/firstNameView"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,7 +28,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="24dp"
-                android:text="Vorname"
+                android:text="@string/firstName"
                 app:layout_constraintStart_toEndOf="@+id/cardView"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,7 +54,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:contentDescription="Avatar Image"
+                    android:contentDescription="@string/avatar_image_desc"
                     android:src="@drawable/avatar" />
             </androidx.cardview.widget.CardView>
 

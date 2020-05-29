@@ -1,13 +1,16 @@
 package ch.noseryoung.lernendeverwaltung;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
 
     private String firstName;
     private String lastName;
 
-    public User(String firstName, String vorname) {
+    public User(String firstName, String lastName) {
         this.firstName = firstName;
-        this.lastName = vorname;
+        this.lastName = lastName;
     }
 
     public String getLastName() {
