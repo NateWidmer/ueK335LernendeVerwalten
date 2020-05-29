@@ -22,7 +22,7 @@ public class CreateActivity extends AppCompatActivity {
                 R.array.companies, R.layout.spinner_item);
 
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spinner = findViewById(R.id.spinner);
+        spinner = findViewById(R.id.companySpinner);
         spinner.setAdapter(adapter);
     }
 
