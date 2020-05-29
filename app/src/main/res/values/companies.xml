@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string-array name="companies">
+        <item>@string/enterprise_default</item>
+        <item>@string/enterprise_accenture</item>
+        <item>@string/enterprise_crealogix</item>
+        <item>@string/enterprise_frox</item>
+        <item>@string/enterprise_google</item>
+        <item>@string/enterprise_nosereng</item>
+        <item>@string/enterprise_noseryoung</item>
+        <item>@string/enterprise_six</item>
+    </string-array>
+</resources>
