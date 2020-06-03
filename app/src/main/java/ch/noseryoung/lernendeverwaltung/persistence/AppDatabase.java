@@ -6,7 +6,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import ch.noseryoung.lernendeverwaltung.model.User;
 
-@Database(entities = {User.class}, version = 3)
+@Database(entities = {User.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
   private static final String DB_Name = "uek335";

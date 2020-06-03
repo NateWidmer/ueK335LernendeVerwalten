@@ -1,27 +1,47 @@
 package ch.noseryoung.lernendeverwaltung;
 
+import android.Manifest;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.core.content.FileProvider;
 import ch.noseryoung.lernendeverwaltung.model.User;
 import ch.noseryoung.lernendeverwaltung.persistence.AppDatabase;
 import ch.noseryoung.lernendeverwaltung.persistence.UserDao;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class CreateActivity extends AppCompatActivity {
 
   Spinner spinner;
   FloatingActionButton saveButton;
+  ImageButton profilePictureButton;
   private UserDao userDao;
+  static final int REQUEST_IMAGE_CAPTURE = 1;
+  ImageView avatarPicture;
+  String profilePicturePath;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +65,75 @@ public class CreateActivity extends AppCompatActivity {
         openMainActivity();
       }
     });
+
+    if (Build.VERSION.SDK_INT>=23) {
+      requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+    }
+
+    profilePictureButton = findViewById(R.id.addProfilePictureButton);
+    profilePictureButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        openCamera();
+      }
+    });
   }
 
   private void openMainActivity() {
     saveUser();
     Intent intend = new Intent(this, MainActivity.class);
     startActivity(intend);
+  }
+
+  private void openCamera() {
+    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+    if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+      File photoFile = null;
+      photoFile = createImageFile();
+
+      if (photoFile != null) {
+        profilePicturePath = photoFile.getAbsolutePath();
+        Uri photoURI = FileProvider.getUriForFile(CreateActivity.this, "ch.noseryoung.lernendeverwaltung", photoFile);
+        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+
+      }
+    }
+  }
+
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+      Bitmap imageBitmap = BitmapFactory.decodeFile(profilePicturePath);
+      avatarPicture = findViewById(R.id.avatarPictureList);
+      avatarPicture.setImageBitmap(imageBitmap);
+    }
+  }
+
+  private File createImageFile() {
+    // Create an image file name
+    String filename = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+    File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+    File image = null;
+    try {
+      image = File.createTempFile(
+          filename,
+          ".jpg",
+          storageDir
+      );
+    } catch(IOException e) {
+      Log.d("ImageFile", "Exception creating Image File");
+    }
+    return image;
+  }
+
+  private void galleryAddPic() {
+    Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+    File f = new File(profilePicturePath);
+    Uri contentUri = Uri.fromFile(f);
+    mediaScanIntent.setData(contentUri);
+    this.sendBroadcast(mediaScanIntent);
   }
 
   private void saveUser() {
@@ -61,7 +144,7 @@ public class CreateActivity extends AppCompatActivity {
     Spinner companySpinner = findViewById(R.id.companySpinner);
     String company = companySpinner.getSelectedItem().toString();
 
-    userDao.insert(new User(firstName, lastName, "Bild", company));
+    userDao.insert(new User(firstName, lastName, profilePicturePath, company));
   }
 
 
