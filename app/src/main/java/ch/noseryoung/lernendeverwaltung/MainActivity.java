@@ -6,9 +6,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
 import android.widget.SearchView;
 import ch.noseryoung.lernendeverwaltung.model.company.Company;
 import ch.noseryoung.lernendeverwaltung.model.user.User;
@@ -17,6 +19,8 @@ import ch.noseryoung.lernendeverwaltung.persistence.AppDatabase;
 import ch.noseryoung.lernendeverwaltung.persistence.CompanyDao;
 import ch.noseryoung.lernendeverwaltung.persistence.UserDao;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,11 +28,22 @@ public class MainActivity extends AppCompatActivity {
 
   private UserDao userDao;
   private CompanyDao companyDao;
+  FloatingActionButton addButton;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+
+    addButton = findViewById(R.id.addButton);
+    addButton.bringToFront();
+    addButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        openCreateActivity();
+      }
+    });
+
     RecyclerView userView = findViewById(R.id.avatarList);
     userView.setHasFixedSize(true);
     // use a linear layout manager
@@ -56,20 +71,24 @@ public class MainActivity extends AppCompatActivity {
     companyDao.insert(new Company(getText(R.string.company_six).toString()));
   }
 
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    MenuInflater inflater = getMenuInflater();
-    inflater.inflate(R.menu.search_menu, menu);
+    private void openCreateActivity() {
+        Intent intend = new Intent(this, CreateActivity.class);
+        startActivity(intend);
+    }
 
-    // Associate searchable configuration with the SearchView
-    SearchManager searchManager =
-        (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-    SearchView searchView =
-        (SearchView) menu.findItem(R.id.search).getActionView();
-    searchView.setSearchableInfo(
-        searchManager.getSearchableInfo(getComponentName()));
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_menu, menu);
 
-    return true;
-  }
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView =
+                (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getComponentName()));
 
+        return true;
+    }
 }
