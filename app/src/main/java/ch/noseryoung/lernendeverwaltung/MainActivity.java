@@ -28,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
         data.add(new User("Peter", "Meier"));
         data.add(new User("Hans", "Muster"));
 
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
         addButton = findViewById(R.id.addButton);
         addButton.bringToFront();
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -37,8 +40,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         RecyclerView userView = findViewById(R.id.avatarList);
         userView.setHasFixedSize(true);
         // use a linear layout manager
@@ -46,10 +47,6 @@ public class MainActivity extends AppCompatActivity {
         userView.setLayoutManager(linearLayoutManager);
         UserAdapter userAdapter = new UserAdapter(data);
         userView.setAdapter(userAdapter);
-
-
-
-
     }
 
     private void openCreateActivity() {
