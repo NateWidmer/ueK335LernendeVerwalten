@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -15,6 +16,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class CreateActivity extends AppCompatActivity {
 
     Spinner spinner;
+    FloatingActionButton saveButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +31,8 @@ public class CreateActivity extends AppCompatActivity {
         spinner = findViewById(R.id.companySpinner);
         spinner.setAdapter(adapter);
 
-        FloatingActionButton addButton = findViewById(R.id.saveButton);
-        addButton.setOnClickListener(new View.OnClickListener() {
+        saveButton = findViewById(R.id.saveButton);
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openMainActivity();
@@ -48,6 +50,19 @@ public class CreateActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.cancel_menu, menu);
+
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.cancel:
+                Intent i = new Intent(this,MainActivity.class);
+                this.startActivity(i);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

@@ -50,12 +50,14 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:id="@+id/avatarImage"
+                    android:id="@+id/avatarPicture"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
+                    android:background="@color/primaryDarkNOA"
                     android:contentDescription="@string/avatar_image_desc"
-                    app:srcCompat="@drawable/avatar" />
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/avatar"/>
             </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
