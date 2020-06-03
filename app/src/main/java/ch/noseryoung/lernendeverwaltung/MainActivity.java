@@ -3,14 +3,12 @@ package ch.noseryoung.lernendeverwaltung;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.view.MenuItem;
 import android.widget.SearchView;
 import ch.noseryoung.lernendeverwaltung.model.User;
 import ch.noseryoung.lernendeverwaltung.model.UserAdapter;
@@ -19,17 +17,19 @@ import ch.noseryoung.lernendeverwaltung.persistence.UserDao;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
   private UserDao userDao;
   FloatingActionButton addButton;
+  UserAdapter userAdapter;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+    loadUsers();
 
     addButton = findViewById(R.id.addButton);
     addButton.bringToFront();
@@ -45,33 +45,42 @@ public class MainActivity extends AppCompatActivity {
     // use a linear layout manager
     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
     userView.setLayoutManager(linearLayoutManager);
-
-    userDao = AppDatabase.getAppDb(getApplicationContext()).getUserDao();
-
-    List<User> usersFromDatabase = userDao.getAll();
-    UserAdapter userAdapter = new UserAdapter(usersFromDatabase);
     userView.setAdapter(userAdapter);
 
   }
 
-    private void openCreateActivity() {
-        Intent intend = new Intent(this, CreateActivity.class);
-        startActivity(intend);
-    }
+  public void loadUsers() {
+    userDao = AppDatabase.getAppDb(getApplicationContext()).getUserDao();
+    this.userAdapter = new UserAdapter((ArrayList) userDao.getAll());
+  }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.search_menu, menu);
+  private void openCreateActivity() {
+    Intent intend = new Intent(this, CreateActivity.class);
+    startActivity(intend);
+  }
 
-        // Associate searchable configuration with the SearchView
-        SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView =
-                (SearchView) menu.findItem(R.id.search).getActionView();
-        searchView.setSearchableInfo(
-                searchManager.getSearchableInfo(getComponentName()));
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    MenuInflater inflater = getMenuInflater();
+    inflater.inflate(R.menu.search_menu, menu);
 
-        return true;
-    }
+    MenuItem searchItem = menu.findItem(R.id.action_search);
+    SearchView searchView = (SearchView) searchItem.getActionView();
+
+    searchView.setQueryHint(getText(R.string.search_hint));
+    searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+      @Override
+      public boolean onQueryTextSubmit(String query) {
+        return false;
+      }
+
+      @Override
+      public boolean onQueryTextChange(String newText) {
+
+        userAdapter.getFilter().filter(newText);
+        return false;
+      }
+    });
+    return true;
+  }
 }
