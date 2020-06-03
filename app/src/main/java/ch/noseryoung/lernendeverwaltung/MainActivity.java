@@ -12,22 +12,18 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.SearchView;
-import ch.noseryoung.lernendeverwaltung.model.company.Company;
-import ch.noseryoung.lernendeverwaltung.model.user.User;
-import ch.noseryoung.lernendeverwaltung.model.user.UserAdapter;
+import ch.noseryoung.lernendeverwaltung.model.User;
+import ch.noseryoung.lernendeverwaltung.model.UserAdapter;
 import ch.noseryoung.lernendeverwaltung.persistence.AppDatabase;
-import ch.noseryoung.lernendeverwaltung.persistence.CompanyDao;
 import ch.noseryoung.lernendeverwaltung.persistence.UserDao;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
   private UserDao userDao;
-  private CompanyDao companyDao;
   FloatingActionButton addButton;
 
   @Override
@@ -50,25 +46,12 @@ public class MainActivity extends AppCompatActivity {
     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
     userView.setLayoutManager(linearLayoutManager);
 
-    insertCompanies();
-
     userDao = AppDatabase.getAppDb(getApplicationContext()).getUserDao();
 
     List<User> usersFromDatabase = userDao.getAll();
     UserAdapter userAdapter = new UserAdapter(usersFromDatabase);
     userView.setAdapter(userAdapter);
 
-  }
-
-  public void insertCompanies() {
-    companyDao = AppDatabase.getAppDb(getApplicationContext()).getCompanyDao();
-    companyDao.insert(new Company(getText(R.string.company_accenture).toString()));
-    companyDao.insert(new Company(getText(R.string.company_crealogix).toString()));
-    companyDao.insert(new Company(getText(R.string.company_frox).toString()));
-    companyDao.insert(new Company(getText(R.string.company_google).toString()));
-    companyDao.insert(new Company(getText(R.string.company_nosereng).toString()));
-    companyDao.insert(new Company(getText(R.string.company_noseryoung).toString()));
-    companyDao.insert(new Company(getText(R.string.company_six).toString()));
   }
 
     private void openCreateActivity() {

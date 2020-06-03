@@ -1,4 +1,4 @@
-package ch.noseryoung.lernendeverwaltung.model.user;
+package ch.noseryoung.lernendeverwaltung.model;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import ch.noseryoung.lernendeverwaltung.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserViewHolder>{

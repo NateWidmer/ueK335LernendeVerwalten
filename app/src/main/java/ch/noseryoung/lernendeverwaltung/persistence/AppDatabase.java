@@ -4,10 +4,9 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import ch.noseryoung.lernendeverwaltung.model.company.Company;
-import ch.noseryoung.lernendeverwaltung.model.user.User;
+import ch.noseryoung.lernendeverwaltung.model.User;
 
-@Database(entities = {User.class, Company.class}, version = 2)
+@Database(entities = {User.class}, version = 3)
 public abstract class AppDatabase extends RoomDatabase {
 
   private static final String DB_Name = "uek335";
@@ -25,5 +24,4 @@ public abstract class AppDatabase extends RoomDatabase {
 
   public abstract UserDao getUserDao();
 
-  public abstract CompanyDao getCompanyDao();
 }

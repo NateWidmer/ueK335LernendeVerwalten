@@ -1,4 +1,4 @@
-package ch.noseryoung.lernendeverwaltung.model.user;
+package ch.noseryoung.lernendeverwaltung.model;
 
 import android.view.View;
 import android.widget.TextView;

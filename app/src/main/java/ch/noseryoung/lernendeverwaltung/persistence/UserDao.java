@@ -3,7 +3,7 @@ package ch.noseryoung.lernendeverwaltung.persistence;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
-import ch.noseryoung.lernendeverwaltung.model.user.User;
+import ch.noseryoung.lernendeverwaltung.model.User;
 
 import java.util.List;
 

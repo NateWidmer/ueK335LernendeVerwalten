@@ -114,7 +114,7 @@
         app:layout_constraintTop_toBottomOf="@+id/lastNameLabel" />
 
     <TextView
-        android:id="@+id/comapnyTextView"
+        android:id="@+id/companyTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -172,6 +172,6 @@
         android:background="@color/mainNOA"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/comapnyTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/companyTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

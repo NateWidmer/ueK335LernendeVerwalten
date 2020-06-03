@@ -1,13 +1,11 @@
-package ch.noseryoung.lernendeverwaltung.model.user;
+package ch.noseryoung.lernendeverwaltung.model;
 
 import androidx.annotation.NonNull;
 import androidx.room.*;
-import ch.noseryoung.lernendeverwaltung.model.company.Company;
 
 import java.util.UUID;
 
-@Entity(tableName = "users", foreignKeys =
-@ForeignKey(entity=Company.class, parentColumns = "id", childColumns = "company_id"))
+@Entity(tableName = "users")
 public class User {
 
     @PrimaryKey
@@ -23,15 +21,15 @@ public class User {
     @ColumnInfo(name = "profile_picture")
     private String profilePicture;
 
-    @ColumnInfo(name = "company_id")
-    public String companyId;
+    @ColumnInfo(name = "company")
+    public String company;
 
-    public User(String id, String firstName, String lastName, String profilePicture, String companyId) {
+    public User(String firstName, String lastName, String profilePicture, String company) {
         this.id = UUID.randomUUID().toString();
         this.firstName = firstName;
         this.lastName = lastName;
         this.profilePicture = profilePicture;
-        this.companyId = companyId;
+        this.company = company;
     }
 
     @NonNull
@@ -68,10 +66,10 @@ public class User {
     }
 
     public String getCompanyId() {
-        return companyId;
+        return company;
     }
 
-    public void setCompanyId(String companyId) {
-        this.companyId = companyId;
+    public void setCompanyId(String company) {
+        this.company = company;
     }
 }
