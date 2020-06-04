@@ -59,6 +59,9 @@ public class MainActivity extends AppCompatActivity implements OnUserListener {
         userView.setAdapter(userAdapter);
     }
 
+    //Functions
+
+    //Functions for Menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -84,12 +87,12 @@ public class MainActivity extends AppCompatActivity implements OnUserListener {
         return true;
     }
 
+    //Change Activity
     @Override
     public void onUserClick(int position) {
         Intent intent = new Intent(this, DetailActivity.class);
         intent.putExtra("USER_ID", userDao.getAll().get(position).getId());
         startActivity(intent);
-
     }
 
     private void openCreateActivity() {
