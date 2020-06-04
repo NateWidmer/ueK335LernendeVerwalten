@@ -108,7 +108,7 @@ public class CreateActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                preNameLetterCount.setText(s.length() + " / 50");
+                preNameLetterCount.setText(s.length() + "/ 50");
 
                 if (s.length() > 50) {
                     preName.setError("Die Eingabe ist zu lang (max 50 Zeichen)");
@@ -131,7 +131,7 @@ public class CreateActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                lastNameLetterCount.setText(s.length() + " / 50");
+                lastNameLetterCount.setText(s.length() + "/ 50");
                 if (s.length() > 50) {
                     lastName.setError("Die Eingabe ist zu lang (max 50 Zeichen)");
                 }
@@ -229,7 +229,7 @@ public class CreateActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            avatarPicture = findViewById(R.id.avatarPictureList);
+            avatarPicture = findViewById(R.id.avatarPicture);
             avatarPicture.setImageBitmap(imageBitmap);
         }
     }
