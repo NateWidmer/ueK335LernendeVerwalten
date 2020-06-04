@@ -1,5 +1,7 @@
 package ch.noseryoung.lernendeverwaltung.model;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import androidx.annotation.NonNull;
 import androidx.room.*;
 
@@ -30,6 +32,10 @@ public class User {
         this.lastName = lastName;
         this.profilePicture = profilePicture;
         this.company = company;
+    }
+
+    public Bitmap getProfilePictureAsBitmap() {
+        return BitmapFactory.decodeFile(profilePicture);
     }
 
     @NonNull
