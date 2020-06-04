@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.MenuItem;
 import android.widget.SearchView;
+import ch.noseryoung.lernendeverwaltung.model.OnUserListener;
 import ch.noseryoung.lernendeverwaltung.model.UserAdapter;
 import ch.noseryoung.lernendeverwaltung.persistence.AppDatabase;
 import ch.noseryoung.lernendeverwaltung.persistence.UserDao;
@@ -18,7 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnUserListener {
 
   private UserDao userDao;
   FloatingActionButton addButton;
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
   public void loadUsers() {
     userDao = AppDatabase.getAppDb(getApplicationContext()).getUserDao();
-    this.userAdapter = new UserAdapter((ArrayList) userDao.getAll(), getApplicationContext());
+    this.userAdapter = new UserAdapter((ArrayList) userDao.getAll(), getApplicationContext(), this);
   }
 
   private void openCreateActivity() {
@@ -81,5 +82,15 @@ public class MainActivity extends AppCompatActivity {
       }
     });
     return true;
+  }
+
+  @Override
+  public void onUserClick(int position) {
+
+    userDao.getAll().get(position);
+    Intent intent = new Intent(this, DetailActivity.class);
+    intent.putExtra("USER_ID", userDao.getAll().get(position).getId());
+    startActivity(intent);
+
   }
 }

@@ -4,8 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,7 +30,6 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -118,7 +115,7 @@ public class CreateActivity extends AppCompatActivity {
         e.printStackTrace();
       }
 
-      avatarPicture = findViewById(R.id.avatarPictureList);
+      avatarPicture = findViewById(R.id.avatarPicture);
       avatarPicture.setImageBitmap(imageBitmap);
     }
   }

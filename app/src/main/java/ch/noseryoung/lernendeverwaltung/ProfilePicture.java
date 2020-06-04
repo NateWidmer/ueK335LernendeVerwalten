@@ -17,19 +17,22 @@ public class ProfilePicture {
   }
 
   public Bitmap rotateImageIfRequired() throws IOException {
-    ExifInterface ei = new ExifInterface(profilePicturePath);
-    int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+    if (profilePicturePath != null) {
+      ExifInterface ei = new ExifInterface(profilePicturePath);
+      int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
 
-    switch (orientation) {
-      case ExifInterface.ORIENTATION_ROTATE_90:
-        return rotateImage(imageBitmap, 90);
-      case ExifInterface.ORIENTATION_ROTATE_180:
-        return rotateImage(imageBitmap, 180);
-      case ExifInterface.ORIENTATION_ROTATE_270:
-        return rotateImage(imageBitmap, 270);
-      default:
-        return imageBitmap;
+      switch (orientation) {
+        case ExifInterface.ORIENTATION_ROTATE_90:
+          return rotateImage(imageBitmap, 90);
+        case ExifInterface.ORIENTATION_ROTATE_180:
+          return rotateImage(imageBitmap, 180);
+        case ExifInterface.ORIENTATION_ROTATE_270:
+          return rotateImage(imageBitmap, 270);
+        default:
+          return imageBitmap;
+      }
     }
+    return imageBitmap;
   }
 
   private Bitmap rotateImage(Bitmap imageBitmap, int degree) {
