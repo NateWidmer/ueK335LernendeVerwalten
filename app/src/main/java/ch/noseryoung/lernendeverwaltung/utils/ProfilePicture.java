@@ -1,4 +1,4 @@
-package ch.noseryoung.lernendeverwaltung;
+package ch.noseryoung.lernendeverwaltung.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.Matrix;

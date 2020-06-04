@@ -1,12 +1,6 @@
 package ch.noseryoung.lernendeverwaltung.model;
 
-import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +8,9 @@ import android.widget.Filter;
 import android.widget.Filterable;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
-import ch.noseryoung.lernendeverwaltung.DetailActivity;
-import ch.noseryoung.lernendeverwaltung.ProfilePicture;
+
+import ch.noseryoung.lernendeverwaltung.utils.ProfilePicture;
 import ch.noseryoung.lernendeverwaltung.R;
 
 import java.io.IOException;

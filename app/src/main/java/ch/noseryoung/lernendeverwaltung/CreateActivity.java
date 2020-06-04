@@ -30,16 +30,16 @@ import androidx.core.content.FileProvider;
 import ch.noseryoung.lernendeverwaltung.model.User;
 import ch.noseryoung.lernendeverwaltung.persistence.AppDatabase;
 import ch.noseryoung.lernendeverwaltung.persistence.UserDao;
+import ch.noseryoung.lernendeverwaltung.utils.ProfilePicture;
+import ch.noseryoung.lernendeverwaltung.utils.Validator;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
-import java.util.regex.Pattern;
 
 public class CreateActivity extends AppCompatActivity {
 
@@ -48,9 +48,9 @@ public class CreateActivity extends AppCompatActivity {
     FloatingActionButton saveButton;
     ImageButton profilePictureButton;
     ImageView avatarPicture;
-    EditText preName;
+    EditText firstName;
     EditText lastName;
-    TextView preNameLetterCount;
+    TextView firstNameLetterCount;
     TextView lastNameLetterCount;
 
     //Dao
@@ -93,25 +93,25 @@ public class CreateActivity extends AppCompatActivity {
         });
 
         //Define Form
-        preName = findViewById(R.id.preNameInputEditText);
-        preNameLetterCount = findViewById(R.id.preNameLetterCount);
+        firstName = findViewById(R.id.preNameInputEditText);
+        firstNameLetterCount = findViewById(R.id.preNameLetterCount);
         lastName = findViewById(R.id.lastNameInputEditText);
         lastNameLetterCount = findViewById(R.id.lastNameLetterCount);
 
-        preName.addTextChangedListener(new TextWatcher() {
+        firstName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 if (s.length() == 0) {
-                    preName.setError("Eingabe obligatorisch");
+                    firstName.setError("Eingabe obligatorisch");
                 }
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                preNameLetterCount.setText(s.length() + "/ 50");
+                firstNameLetterCount.setText(s.length() + "/ 50");
 
                 if (s.length() > 50) {
-                    preName.setError("Die Eingabe ist zu lang (max 50 Zeichen)");
+                    firstName.setError("Die Eingabe ist zu lang (max 50 Zeichen)");
                 }
             }
 
@@ -144,15 +144,17 @@ public class CreateActivity extends AppCompatActivity {
         });
 
         final LinkedList<EditText> createForm = new LinkedList<EditText>();
-        createForm.add(preName);
+        createForm.add(firstName);
         createForm.add(lastName);
 
+        //Save User
+        final Validator validator = new Validator();
         saveButton = findViewById(R.id.saveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isValid(createForm)) {
-                    saveUser();
+                if (validator.isValid(createForm)) {
+                    userDao.insert(new User(firstName.getText().toString(), lastName.getText().toString(), profilePicturePath, spinner.getSelectedItem().toString()));
                     openMainActivity();
                 }
             }
@@ -233,37 +235,6 @@ public class CreateActivity extends AppCompatActivity {
             avatarPicture.setImageBitmap(imageBitmap);
         }
     }
-
-    //Functions for Form
-    private boolean isValid(LinkedList<EditText> form) {
-        boolean fieldsOK = false;
-        for (EditText editText : form) {
-            if (editText.getText().length() == 0) {
-                editText.setError("Eingabe obligatorisch");
-                fieldsOK = false;
-            } else if (editText.getText().length() > 50) {
-                editText.setError("Die Eingabe ist zu lang (max 50 Zeichen)");
-            } else if (!Pattern.matches("[a-zA-Z]+", editText.getText())) {
-                editText.setError("Es dürfen nur Buchstaben verwendet werden");
-                fieldsOK = false;
-            } else {
-                fieldsOK = true;
-            }
-        }
-        return fieldsOK;
-    }
-
-    private void saveUser() {
-        TextInputEditText preNameTextInput = findViewById(R.id.preNameInputEditText);
-        String firstName = preNameTextInput.getText().toString();
-        TextInputEditText lastNameTextInput = findViewById(R.id.lastNameInputEditText);
-        String lastName = lastNameTextInput.getText().toString();
-        Spinner companySpinner = findViewById(R.id.companySpinner);
-        String company = companySpinner.getSelectedItem().toString();
-
-        userDao.insert(new User(firstName, lastName, profilePicturePath, company));
-    }
-
 
     //Change Activity
     private void openMainActivity() {
