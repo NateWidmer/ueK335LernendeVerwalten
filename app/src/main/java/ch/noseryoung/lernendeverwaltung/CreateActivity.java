@@ -176,8 +176,7 @@ public class CreateActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.cancel:
-                Intent i = new Intent(this, MainActivity.class);
-                this.startActivity(i);
+                openMainActivity();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
