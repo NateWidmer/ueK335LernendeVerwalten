@@ -93,8 +93,8 @@ public class CreateActivity extends AppCompatActivity {
         });
 
         //Define Form
-        firstName = findViewById(R.id.preNameInputEditText);
-        firstNameLetterCount = findViewById(R.id.preNameLetterCount);
+        firstName = findViewById(R.id.firstNameInputEditText);
+        firstNameLetterCount = findViewById(R.id.firstNameLetterCount);
         lastName = findViewById(R.id.lastNameInputEditText);
         lastNameLetterCount = findViewById(R.id.lastNameLetterCount);
 

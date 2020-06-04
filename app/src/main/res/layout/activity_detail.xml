@@ -33,7 +33,7 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/preNameLabel"
+        android:id="@+id/firstNameLabel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -59,7 +59,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/preNameUnderline" />
+        app:layout_constraintTop_toBottomOf="@+id/firstNameUnderline" />
 
     <TextView
         android:id="@+id/companyLabel"
@@ -77,7 +77,7 @@
         app:layout_constraintTop_toBottomOf="@+id/lastNameUnderline" />
 
     <TextView
-        android:id="@+id/preNameTextView"
+        android:id="@+id/firstNameTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -92,7 +92,7 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/preNameLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/firstNameLabel" />
 
     <TextView
         android:id="@+id/lastNameTextView"
@@ -133,7 +133,7 @@
         app:layout_constraintTop_toBottomOf="@+id/companyLabel" />
 
     <View
-        android:id="@+id/preNameUnderline"
+        android:id="@+id/firstNameUnderline"
         android:layout_width="0dp"
         android:layout_height="1.25dp"
         android:layout_marginStart="20dp"
@@ -144,7 +144,7 @@
         android:background="@color/mainNOA"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/preNameTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/firstNameTextView" />
 
     <View
         android:id="@+id/lastNameUnderline"

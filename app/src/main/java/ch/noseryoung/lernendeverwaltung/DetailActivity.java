@@ -75,7 +75,7 @@ public class DetailActivity extends AppCompatActivity {
 
     //Function to fill Views
     public void insertUserData(User currentUser) throws IOException {
-        firstName = findViewById(R.id.preNameTextView);
+        firstName = findViewById(R.id.firstNameTextView);
         firstName.setText(currentUser.getFirstName());
         lastName = findViewById(R.id.lastNameTextView);
         lastName.setText(currentUser.getLastName());
