@@ -19,10 +19,17 @@ import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserViewHolder> implements Filterable {
 
+  // Users and duplicate User List for Filter
   private ArrayList<User> users;
   private ArrayList<User> usersFull;
+
+  // Application Context for Profile Picture Rotate
   private Context applicationContext;
+
+  // Profile Picture
   private ProfilePicture profilePicture;
+
+  // On User Listener for On Click on List Element
   private OnUserListener onUserListener;
 
   public UserAdapter(ArrayList<User> users, Context applicationContext, OnUserListener onUserListener) {
@@ -32,6 +39,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserViewHolder> implements
     this.onUserListener = onUserListener;
   }
 
+  // Functions
+
+  // Recycler View
   @NonNull
   @Override
   public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -43,7 +53,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserViewHolder> implements
 
   @Override
   public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
-    profilePicture = new ProfilePicture(users.get(position).getProfilePictureAsBitmap(applicationContext), users.get(position).getProfilePicture());
+    profilePicture = new ProfilePicture(users.get(position).getProfilePictureAsBitmap(applicationContext), users.get(position).getProfilePicturePath());
 
     holder.firstName.setText(users.get(position).getFirstName());
     holder.lastName.setText(users.get(position).getLastName());
@@ -53,7 +63,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserViewHolder> implements
     } catch (IOException e) {
       e.printStackTrace();
     }
-
   }
 
   @Override
@@ -61,6 +70,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserViewHolder> implements
     return users.size();
   }
 
+  // Filter Functions
   @Override
   public Filter getFilter() {
     return userFilter;

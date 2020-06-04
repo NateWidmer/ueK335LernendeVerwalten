@@ -1,17 +1,18 @@
 package ch.noseryoung.lernendeverwaltung.model;
 
-import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.room.*;
-import ch.noseryoung.lernendeverwaltung.R;
 
 import java.util.UUID;
+
+import ch.noseryoung.lernendeverwaltung.R;
 
 @Entity(tableName = "users")
 public class User {
@@ -27,30 +28,29 @@ public class User {
     private String lastName;
 
     @ColumnInfo(name = "profile_picture")
-    private String profilePicture;
+    private String profilePicturePath;
 
     @ColumnInfo(name = "company")
     public String company;
 
-    public User(String firstName, String lastName, String profilePicture, String company) {
+    public User(String firstName, String lastName, String profilePicturePath, String company) {
         this.id = UUID.randomUUID().toString();
         this.firstName = firstName;
         this.lastName = lastName;
-        this.profilePicture = profilePicture;
+        this.profilePicturePath = profilePicturePath;
         this.company = company;
     }
 
-    public Bitmap getProfilePictureAsBitmap(Context applicationContext) {
-        if (this.profilePicture != null) {
-            return BitmapFactory.decodeFile(profilePicture);
-        } else {
-            return convertDrawableAvatarToBitmap(applicationContext);
-        }
-    }
+    // Functions
 
-    public Bitmap convertDrawableAvatarToBitmap(Context applicationContext) {
-        Drawable avatar = ContextCompat.getDrawable(applicationContext, R.drawable.avatar);
-        return ((BitmapDrawable)avatar).getBitmap();
+    // Returns Profile Picture as a Bitmap / DrawableBitmap
+    public Bitmap getProfilePictureAsBitmap(Context applicationContext) {
+        if (this.getProfilePicturePath() != null) {
+            return BitmapFactory.decodeFile(this.getProfilePicturePath());
+        } else {
+            Drawable avatar = ContextCompat.getDrawable(applicationContext, R.drawable.avatar);
+            return ((BitmapDrawable)avatar).getBitmap();
+        }
     }
 
     @NonNull
@@ -78,12 +78,12 @@ public class User {
         this.firstName = firstName;
     }
 
-    public String getProfilePicture() {
-        return profilePicture;
+    public String getProfilePicturePath() {
+        return profilePicturePath;
     }
 
-    public void setProfilePicture(String profilePicture) {
-        this.profilePicture = profilePicture;
+    public void setProfilePicturePath(String profilePicturePath) {
+        this.profilePicturePath = profilePicturePath;
     }
 
     public String getCompany() {

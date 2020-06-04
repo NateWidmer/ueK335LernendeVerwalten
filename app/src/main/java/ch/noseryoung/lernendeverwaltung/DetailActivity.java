@@ -82,7 +82,7 @@ public class DetailActivity extends AppCompatActivity {
         company = findViewById(R.id.companyTextView);
         company.setText(currentUser.getCompany());
 
-        ProfilePicture profilePicture = new ProfilePicture(currentUser.getProfilePictureAsBitmap(this), currentUser.getProfilePicture());
+        ProfilePicture profilePicture = new ProfilePicture(currentUser.getProfilePictureAsBitmap(this), currentUser.getProfilePicturePath());
 
         profileView = findViewById(R.id.avatarPicture);
         profileView.setImageBitmap(profilePicture.rotateImageIfRequired());

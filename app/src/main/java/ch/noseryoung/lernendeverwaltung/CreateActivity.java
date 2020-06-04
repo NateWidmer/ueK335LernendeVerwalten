@@ -79,7 +79,7 @@ public class CreateActivity extends AppCompatActivity {
         spinner.setAdapter(adapter);
 
         //Ask for Camera Permission
-        if (Build.VERSION.SDK_INT >= 23) {
+        if (Build.VERSION.SDK_INT >= 29) {
             requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
         }
 
@@ -187,8 +187,7 @@ public class CreateActivity extends AppCompatActivity {
     private void openCamera() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            File photoFile = null;
-            photoFile = createImageFile();
+            File photoFile = createImageFile();
 
             if (photoFile != null) {
                 profilePicturePath = photoFile.getAbsolutePath();
