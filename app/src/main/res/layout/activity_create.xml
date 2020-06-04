@@ -133,4 +133,24 @@
         app:srcCompat="@drawable/ic_camera_alt_black_24dp"
         android:background="@drawable/rounded_corners"/>
 
+    <TextView
+        android:id="@+id/preNameLetterCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="28dp"
+        android:layout_marginRight="28dp"
+        android:text="0/50"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPreName" />
+
+    <TextView
+        android:id="@+id/lastNameLetterCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="28dp"
+        android:layout_marginRight="28dp"
+        android:text="0/50"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutLastName" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
