@@ -10,7 +10,6 @@
     <!--Create Page-->
     <string name="create_title">Lernende Erfassen</string>
     <string name="company">Firma</string>
-    <string name="company_default">Bitte wählen...</string>
     <string name="company_six">Six</string>
     <string name="company_google">Google</string>
     <string name="company_accenture">Accenture</string>

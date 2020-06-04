@@ -2,7 +2,6 @@
 
 <resources>
     <string-array name="companies">
-        <item>@string/company_default</item>
         <item>@string/company_accenture</item>
         <item>@string/company_crealogix</item>
         <item>@string/company_frox</item>

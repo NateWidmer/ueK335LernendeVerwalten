@@ -4,171 +4,272 @@ import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.core.content.FileProvider;
+
 import ch.noseryoung.lernendeverwaltung.model.User;
 import ch.noseryoung.lernendeverwaltung.persistence.AppDatabase;
 import ch.noseryoung.lernendeverwaltung.persistence.UserDao;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.regex.Pattern;
 
 public class CreateActivity extends AppCompatActivity {
 
-  Spinner spinner;
-  FloatingActionButton saveButton;
-  ImageButton profilePictureButton;
-  private UserDao userDao;
-  static final int REQUEST_IMAGE_CAPTURE = 1;
-  ImageView avatarPicture;
-  String profilePicturePath;
-  ProfilePicture profilePicture;
+    //GUI Components
+    Spinner spinner;
+    FloatingActionButton saveButton;
+    ImageButton profilePictureButton;
+    ImageView avatarPicture;
+    EditText preName;
+    EditText lastName;
+    TextView preNameLetterCount;
+    TextView lastNameLetterCount;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    this.setTitle(R.string.create_title);
-    setContentView(R.layout.activity_create);
+    //Dao
+    private UserDao userDao;
 
-    userDao = AppDatabase.getAppDb(getApplicationContext()).getUserDao();
+    //For Camera
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    String profilePicturePath;
 
-    ArrayAdapter adapter = ArrayAdapter.createFromResource(this,
-        R.array.companies, R.layout.spinner_item);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        //Set View and Title
+        super.onCreate(savedInstanceState);
+        this.setTitle(R.string.create_title);
+        setContentView(R.layout.activity_create);
 
-    adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-    spinner = findViewById(R.id.companySpinner);
-    spinner.setAdapter(adapter);
+        //Define UserDao
+        userDao = AppDatabase.getAppDb(getApplicationContext()).getUserDao();
 
-    saveButton = findViewById(R.id.saveButton);
-    saveButton.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        openMainActivity();
-      }
-    });
+        //Define Spinner
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(this,
+                R.array.companies, R.layout.spinner_item);
 
-    if (Build.VERSION.SDK_INT >= 23) {
-      requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spinner = findViewById(R.id.companySpinner);
+        spinner.setAdapter(adapter);
+
+        //Ask for Camera Permission
+        if (Build.VERSION.SDK_INT >= 23) {
+            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+        }
+
+        //Define Profile Picture Button
+        profilePictureButton = findViewById(R.id.addProfilePictureButton);
+        profilePictureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCamera();
+            }
+        });
+
+        //Define Form
+        preName = findViewById(R.id.preNameInputEditText);
+        preNameLetterCount = findViewById(R.id.preNameLetterCount);
+        lastName = findViewById(R.id.lastNameInputEditText);
+        lastNameLetterCount = findViewById(R.id.lastNameLetterCount);
+
+        preName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                if (s.length() == 0) {
+                    preName.setError("Eingabe obligatorisch");
+                }
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                preNameLetterCount.setText(s.length() + " / 50");
+
+                if (s.length() > 50) {
+                    preName.setError("Die Eingabe ist zu lang (max 50 Zeichen)");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        lastName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                if (s.length() == 0) {
+                    lastName.setError("Eingabe obligatorisch");
+                }
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                lastNameLetterCount.setText(s.length() + " / 50");
+                if (s.length() > 50) {
+                    lastName.setError("Die Eingabe ist zu lang (max 50 Zeichen)");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        final LinkedList<EditText> createForm = new LinkedList<EditText>();
+        createForm.add(preName);
+        createForm.add(lastName);
+
+        saveButton = findViewById(R.id.saveButton);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isValid(createForm)) {
+                    saveUser();
+                    openMainActivity();
+                }
+            }
+        });
     }
 
-    profilePictureButton = findViewById(R.id.addProfilePictureButton);
-    profilePictureButton.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        openCamera();
-      }
-    });
-  }
+    //Functions
 
-  private void openMainActivity() {
-    saveUser();
-    Intent intend = new Intent(this, MainActivity.class);
-    startActivity(intend);
-  }
+    //Functions for Menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.cancel_menu, menu);
 
-  private void openCamera() {
-    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-    if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-      File photoFile = null;
-      photoFile = createImageFile();
-
-      if (photoFile != null) {
-        profilePicturePath = photoFile.getAbsolutePath();
-        Uri photoURI = FileProvider.getUriForFile(CreateActivity.this, "ch.noseryoung.lernendeverwaltung", photoFile);
-        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-      }
-    }
-  }
-
-  @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
-    if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-      Bitmap imageBitmap = BitmapFactory.decodeFile(profilePicturePath);
-
-      profilePicture = new ProfilePicture(imageBitmap, profilePicturePath);
-
-      try {
-        imageBitmap = profilePicture.rotateImageIfRequired();
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-
-      avatarPicture = findViewById(R.id.avatarPictureList);
-      avatarPicture.setImageBitmap(imageBitmap);
-    }
-  }
-
-  private File createImageFile() {
-    // Create an image file name
-    String filename = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-    File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-    File image = null;
-    try {
-      image = File.createTempFile(
-          filename,
-          ".jpg",
-          storageDir
-      );
-    } catch (IOException e) {
-      Log.d("ImageFile", "Exception creating Image File");
-    }
-    return image;
-  }
-
-  private void saveUser() {
-    TextInputEditText preNameTextInput = findViewById(R.id.preNameInputEditText);
-    String firstName = preNameTextInput.getText().toString();
-    TextInputEditText lastNameTextInput = findViewById(R.id.lastNameInputEditText);
-    String lastName = lastNameTextInput.getText().toString();
-    Spinner companySpinner = findViewById(R.id.companySpinner);
-    String company = companySpinner.getSelectedItem().toString();
-
-    userDao.insert(new User(firstName, lastName, profilePicturePath, company));
-  }
-
-
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    MenuInflater inflater = getMenuInflater();
-    inflater.inflate(R.menu.cancel_menu, menu);
-
-    return true;
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case R.id.cancel:
-        Intent i = new Intent(this, MainActivity.class);
-        this.startActivity(i);
         return true;
-      default:
-        return super.onOptionsItemSelected(item);
     }
-  }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.cancel:
+                Intent i = new Intent(this, MainActivity.class);
+                this.startActivity(i);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    //Profile Picture and Camera Functions
+    private void openCamera() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            File photoFile = null;
+            photoFile = createImageFile();
+
+            if (photoFile != null) {
+                profilePicturePath = photoFile.getAbsolutePath();
+                Uri photoURI = FileProvider.getUriForFile(CreateActivity.this, "ch.noseryoung.lernendeverwaltung", photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            }
+        }
+    }
+
+    private File createImageFile() {
+        // Create an image file name
+        String filename = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = null;
+        try {
+            image = File.createTempFile(
+                    filename,
+                    ".jpg",
+                    storageDir
+            );
+        } catch (IOException e) {
+            Log.d("ImageFile", "Exception creating Image File");
+        }
+        return image;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        ProfilePicture profilePicture;
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bitmap imageBitmap = BitmapFactory.decodeFile(profilePicturePath);
+            profilePicture = new ProfilePicture(imageBitmap, profilePicturePath);
+
+            try {
+                imageBitmap = profilePicture.rotateImageIfRequired();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            avatarPicture = findViewById(R.id.avatarPictureList);
+            avatarPicture.setImageBitmap(imageBitmap);
+        }
+    }
+
+    //Functions for Form
+    private boolean isValid(LinkedList<EditText> form) {
+        boolean fieldsOK = false;
+        for (EditText editText : form) {
+            if (editText.getText().length() == 0) {
+                editText.setError("Eingabe obligatorisch");
+                fieldsOK = false;
+            } else if (editText.getText().length() > 50) {
+                editText.setError("Die Eingabe ist zu lang (max 50 Zeichen)");
+            } else if (!Pattern.matches("[a-zA-Z]+", editText.getText())) {
+                editText.setError("Es dürfen nur Buchstaben verwendet werden");
+                fieldsOK = false;
+            } else {
+                fieldsOK = true;
+            }
+        }
+        return fieldsOK;
+    }
+
+    private void saveUser() {
+        TextInputEditText preNameTextInput = findViewById(R.id.preNameInputEditText);
+        String firstName = preNameTextInput.getText().toString();
+        TextInputEditText lastNameTextInput = findViewById(R.id.lastNameInputEditText);
+        String lastName = lastNameTextInput.getText().toString();
+        Spinner companySpinner = findViewById(R.id.companySpinner);
+        String company = companySpinner.getSelectedItem().toString();
+
+        userDao.insert(new User(firstName, lastName, profilePicturePath, company));
+    }
+
+
+    //Change Activity
+    private void openMainActivity() {
+        Intent intend = new Intent(this, MainActivity.class);
+        startActivity(intend);
+    }
+
+
 }
