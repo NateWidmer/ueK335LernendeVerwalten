@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -30,6 +32,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -42,6 +45,7 @@ public class CreateActivity extends AppCompatActivity {
   static final int REQUEST_IMAGE_CAPTURE = 1;
   ImageView avatarPicture;
   String profilePicturePath;
+  ProfilePicture profilePicture;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +70,7 @@ public class CreateActivity extends AppCompatActivity {
       }
     });
 
-    if (Build.VERSION.SDK_INT>=23) {
+    if (Build.VERSION.SDK_INT >= 23) {
       requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
     }
 
@@ -96,7 +100,6 @@ public class CreateActivity extends AppCompatActivity {
         Uri photoURI = FileProvider.getUriForFile(CreateActivity.this, "ch.noseryoung.lernendeverwaltung", photoFile);
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
         startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-
       }
     }
   }
@@ -106,6 +109,15 @@ public class CreateActivity extends AppCompatActivity {
     super.onActivityResult(requestCode, resultCode, data);
     if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
       Bitmap imageBitmap = BitmapFactory.decodeFile(profilePicturePath);
+
+      profilePicture = new ProfilePicture(imageBitmap, profilePicturePath);
+
+      try {
+        imageBitmap = profilePicture.rotateImageIfRequired();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+
       avatarPicture = findViewById(R.id.avatarPictureList);
       avatarPicture.setImageBitmap(imageBitmap);
     }
@@ -122,18 +134,10 @@ public class CreateActivity extends AppCompatActivity {
           ".jpg",
           storageDir
       );
-    } catch(IOException e) {
+    } catch (IOException e) {
       Log.d("ImageFile", "Exception creating Image File");
     }
     return image;
-  }
-
-  private void galleryAddPic() {
-    Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-    File f = new File(profilePicturePath);
-    Uri contentUri = Uri.fromFile(f);
-    mediaScanIntent.setData(contentUri);
-    this.sendBroadcast(mediaScanIntent);
   }
 
   private void saveUser() {

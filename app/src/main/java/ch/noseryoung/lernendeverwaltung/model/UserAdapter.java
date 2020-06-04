@@ -1,6 +1,11 @@
 package ch.noseryoung.lernendeverwaltung.model;
 
-import android.graphics.BitmapFactory;
+import android.app.Application;
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,9 +13,13 @@ import android.widget.Filter;
 import android.widget.Filterable;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
+import ch.noseryoung.lernendeverwaltung.ProfilePicture;
 import ch.noseryoung.lernendeverwaltung.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,10 +27,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserViewHolder> implements
 
   private ArrayList<User> users;
   private ArrayList<User> usersFull;
+  private Context applicationContext;
+  private ProfilePicture profilePicture;
 
-  public UserAdapter(ArrayList<User> users) {
+  public UserAdapter(ArrayList<User> users, Context applicationContext) {
     this.users = users;
     usersFull = new ArrayList<>(users);
+    this.applicationContext = applicationContext;
   }
 
   @NonNull
@@ -38,9 +50,24 @@ public class UserAdapter extends RecyclerView.Adapter<UserViewHolder> implements
     holder.firstName.setText(users.get(position).getFirstName());
     holder.lastName.setText(users.get(position).getLastName());
 
+    profilePicture = new ProfilePicture(users.get(position).getProfilePictureAsBitmap(), users.get(position).getProfilePicture());
+
     if (users.get(position).getProfilePicture() != null) {
-      holder.profilePicture.setImageBitmap(users.get(position).getProfilePictureAsBitmap());
+      try {
+        holder.profilePicture.setImageBitmap(profilePicture.rotateImageIfRequired());
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    } else {
+      holder.profilePicture.setImageBitmap(convertDrawableToBitmap(applicationContext));
     }
+  }
+
+  public Bitmap convertDrawableToBitmap(Context applicationContext) {
+    Drawable avatar = ContextCompat.getDrawable(applicationContext, R.drawable.avatar);
+    Bitmap bitmap = ((BitmapDrawable)avatar).getBitmap();
+
+    return bitmap;
   }
 
   @Override

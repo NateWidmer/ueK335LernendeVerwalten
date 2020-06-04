@@ -10,7 +10,6 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.MenuItem;
 import android.widget.SearchView;
-import ch.noseryoung.lernendeverwaltung.model.User;
 import ch.noseryoung.lernendeverwaltung.model.UserAdapter;
 import ch.noseryoung.lernendeverwaltung.persistence.AppDatabase;
 import ch.noseryoung.lernendeverwaltung.persistence.UserDao;
@@ -51,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
   public void loadUsers() {
     userDao = AppDatabase.getAppDb(getApplicationContext()).getUserDao();
-    this.userAdapter = new UserAdapter((ArrayList) userDao.getAll());
+    this.userAdapter = new UserAdapter((ArrayList) userDao.getAll(), getApplicationContext());
   }
 
   private void openCreateActivity() {
