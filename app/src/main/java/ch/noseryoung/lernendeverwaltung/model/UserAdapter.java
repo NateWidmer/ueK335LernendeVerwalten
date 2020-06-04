@@ -2,6 +2,7 @@ package ch.noseryoung.lernendeverwaltung.model;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -16,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
+import ch.noseryoung.lernendeverwaltung.DetailActivity;
 import ch.noseryoung.lernendeverwaltung.ProfilePicture;
 import ch.noseryoung.lernendeverwaltung.R;
 
@@ -29,11 +31,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserViewHolder> implements
   private ArrayList<User> usersFull;
   private Context applicationContext;
   private ProfilePicture profilePicture;
+  private OnUserListener onUserListener;
 
-  public UserAdapter(ArrayList<User> users, Context applicationContext) {
+  public UserAdapter(ArrayList<User> users, Context applicationContext, OnUserListener onUserListener) {
     this.users = users;
     usersFull = new ArrayList<>(users);
     this.applicationContext = applicationContext;
+    this.onUserListener = onUserListener;
   }
 
   @NonNull
@@ -42,32 +46,22 @@ public class UserAdapter extends RecyclerView.Adapter<UserViewHolder> implements
     // create a new view
     View v = (View) LayoutInflater.from(parent.getContext())
         .inflate(R.layout.avatar_list_item, parent, false);
-    return new UserViewHolder(v);
+    return new UserViewHolder(v, onUserListener);
   }
 
   @Override
   public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
+    profilePicture = new ProfilePicture(users.get(position).getProfilePictureAsBitmap(applicationContext), users.get(position).getProfilePicture());
+
     holder.firstName.setText(users.get(position).getFirstName());
     holder.lastName.setText(users.get(position).getLastName());
 
-    profilePicture = new ProfilePicture(users.get(position).getProfilePictureAsBitmap(), users.get(position).getProfilePicture());
-
-    if (users.get(position).getProfilePicture() != null) {
-      try {
-        holder.profilePicture.setImageBitmap(profilePicture.rotateImageIfRequired());
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-    } else {
-      holder.profilePicture.setImageBitmap(convertDrawableToBitmap(applicationContext));
+    try {
+      holder.profilePicture.setImageBitmap(profilePicture.rotateImageIfRequired());
+    } catch (IOException e) {
+      e.printStackTrace();
     }
-  }
 
-  public Bitmap convertDrawableToBitmap(Context applicationContext) {
-    Drawable avatar = ContextCompat.getDrawable(applicationContext, R.drawable.avatar);
-    Bitmap bitmap = ((BitmapDrawable)avatar).getBitmap();
-
-    return bitmap;
   }
 
   @Override

@@ -1,9 +1,15 @@
 package ch.noseryoung.lernendeverwaltung.model;
 
+import android.app.Application;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.room.*;
+import ch.noseryoung.lernendeverwaltung.R;
 
 import java.util.UUID;
 
@@ -34,8 +40,17 @@ public class User {
         this.company = company;
     }
 
-    public Bitmap getProfilePictureAsBitmap() {
-        return BitmapFactory.decodeFile(profilePicture);
+    public Bitmap getProfilePictureAsBitmap(Context applicationContext) {
+        if (this.profilePicture != null) {
+            return BitmapFactory.decodeFile(profilePicture);
+        } else {
+            return convertDrawableAvatarToBitmap(applicationContext);
+        }
+    }
+
+    public Bitmap convertDrawableAvatarToBitmap(Context applicationContext) {
+        Drawable avatar = ContextCompat.getDrawable(applicationContext, R.drawable.avatar);
+        return ((BitmapDrawable)avatar).getBitmap();
     }
 
     @NonNull
@@ -71,11 +86,11 @@ public class User {
         this.profilePicture = profilePicture;
     }
 
-    public String getCompanyId() {
+    public String getCompany() {
         return company;
     }
 
-    public void setCompanyId(String company) {
+    public void setCompany(String company) {
         this.company = company;
     }
 }
