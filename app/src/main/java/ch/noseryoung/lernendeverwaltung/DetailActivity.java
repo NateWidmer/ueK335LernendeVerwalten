@@ -19,43 +19,40 @@ import java.io.IOException;
 
 public class DetailActivity extends AppCompatActivity {
 
-    UserDao userDao;
-    User currentUser;
+    //Gui Components
     TextView firstName;
     TextView lastName;
     TextView company;
     ImageView profileView;
-    ProfilePicture profilePicture;
+
+    //Dao
+    UserDao userDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Get Current User
         userDao = AppDatabase.getAppDb(getApplicationContext()).getUserDao();
         String userID = getIntent().getStringExtra("USER_ID");
-        currentUser = userDao.getById(userID);
+        User currentUser = userDao.getById(userID);
+
+        //Set Title to Username
         this.setTitle(currentUser.getFirstName() + " " + currentUser.getLastName());
+
         setContentView(R.layout.activity_detail);
+
+        //insert Data into Views
         try {
-            insertUserData();
+            insertUserData(currentUser);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void insertUserData() throws IOException {
-        firstName = findViewById(R.id.preNameTextView);
-        firstName.setText(currentUser.getFirstName());
-        lastName = findViewById(R.id.lastNameTextView);
-        lastName.setText(currentUser.getLastName());
-        company = findViewById(R.id.companyTextView);
-        company.setText(currentUser.getCompany());
+    //Functions
 
-        profilePicture = new ProfilePicture(currentUser.getProfilePictureAsBitmap(this), currentUser.getProfilePicture());
-
-        profileView = findViewById(R.id.avatarPicture);
-        profileView.setImageBitmap(profilePicture.rotateImageIfRequired());
-    }
-
+    //Functions for Menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -73,5 +70,20 @@ public class DetailActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    //Function to fill Views
+    public void insertUserData(User currentUser) throws IOException {
+        firstName = findViewById(R.id.preNameTextView);
+        firstName.setText(currentUser.getFirstName());
+        lastName = findViewById(R.id.lastNameTextView);
+        lastName.setText(currentUser.getLastName());
+        company = findViewById(R.id.companyTextView);
+        company.setText(currentUser.getCompany());
+
+        ProfilePicture profilePicture = new ProfilePicture(currentUser.getProfilePictureAsBitmap(this), currentUser.getProfilePicture());
+
+        profileView = findViewById(R.id.avatarPicture);
+        profileView.setImageBitmap(profilePicture.rotateImageIfRequired());
     }
 }
