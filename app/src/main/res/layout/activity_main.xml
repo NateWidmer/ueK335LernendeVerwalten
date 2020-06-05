@@ -16,11 +16,11 @@
         android:background="@color/mainNOA"
         android:clickable="true"
         android:focusable="true"
-        app:srcCompat="@drawable/ic_add_white_24dp"
         app:backgroundTint="@color/mainNOA"
         app:elevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_add_white_24dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/avatarList"

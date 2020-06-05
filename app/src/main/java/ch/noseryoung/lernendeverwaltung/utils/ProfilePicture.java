@@ -16,6 +16,9 @@ public class ProfilePicture {
     this.profilePicturePath = profilePicturePath;
   }
 
+  //Functions
+
+  //Rotate Image
   public Bitmap rotateImageIfRequired() throws IOException {
     if (profilePicturePath != null) {
       ExifInterface ei = new ExifInterface(profilePicturePath);
@@ -43,6 +46,7 @@ public class ProfilePicture {
     return rotatedImage;
   }
 
+  //Getters and Setters
   public String getProfilePicturePath() {
     return profilePicturePath;
   }

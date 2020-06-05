@@ -2,6 +2,7 @@ package ch.noseryoung.lernendeverwaltung;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -40,7 +41,7 @@ public class DetailActivity extends AppCompatActivity {
         try {
             insertUserData(currentUser);
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.d("DETAIL_ACTIVITY", "An Error occurred while inserting The Data of The User into the View", e);
         }
     }
 

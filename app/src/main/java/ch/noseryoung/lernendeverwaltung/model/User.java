@@ -54,6 +54,7 @@ public class User implements Serializable {
         }
     }
 
+    //Getters and Setters
     @NonNull
     public String getId() {
         return id;

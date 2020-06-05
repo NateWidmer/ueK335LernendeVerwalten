@@ -16,11 +16,11 @@
         android:background="@color/mainNOA"
         android:clickable="true"
         android:focusable="true"
-        app:srcCompat="@drawable/ic_done_black_24dp"
         app:backgroundTint="@color/mainNOA"
         app:elevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_done_black_24dp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayoutFirstName"
@@ -152,11 +152,11 @@
         android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="180dp"
+        android:background="@drawable/rounded_corners"
         android:contentDescription="@string/image_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/avatarFrame"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_camera_alt_black_24dp"
-        android:background="@drawable/rounded_corners"/>
+        app:srcCompat="@drawable/ic_camera_alt_black_24dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

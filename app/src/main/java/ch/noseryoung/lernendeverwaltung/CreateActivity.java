@@ -210,7 +210,7 @@ public class CreateActivity extends AppCompatActivity {
                     storageDir
             );
         } catch (IOException e) {
-            Log.d("ImageFile", "Exception creating Image File");
+            Log.d("CREATE_ACTIVITY", "Exception creating Image File", e);
         }
         return image;
     }
@@ -227,7 +227,8 @@ public class CreateActivity extends AppCompatActivity {
             try {
                 imageBitmap = profilePicture.rotateImageIfRequired();
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.d("CREATE_ACTIVITY", "Exception rotating Image", e);
+                ;
             }
 
             this.profilePicture = findViewById(R.id.avatarPicture);
