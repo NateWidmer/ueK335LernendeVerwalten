@@ -1,27 +1,18 @@
 package ch.noseryoung.lernendeverwaltung.utils;
 
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
-
-import androidx.core.content.ContextCompat;
 
 import java.io.IOException;
 
-import ch.noseryoung.lernendeverwaltung.R;
-import ch.noseryoung.lernendeverwaltung.model.User;
-
 public class ProfilePicture {
 
-  private Bitmap imageBitmap;
+  private Bitmap profilePictureBitmap;
   private String profilePicturePath;
 
   public ProfilePicture(Bitmap imageBitmap, String profilePicturePath) {
-    this.imageBitmap = imageBitmap;
+    this.profilePictureBitmap = imageBitmap;
     this.profilePicturePath = profilePicturePath;
   }
 
@@ -32,16 +23,16 @@ public class ProfilePicture {
 
       switch (orientation) {
         case ExifInterface.ORIENTATION_ROTATE_90:
-          return rotateImage(imageBitmap, 90);
+          return rotateImage(profilePictureBitmap, 90);
         case ExifInterface.ORIENTATION_ROTATE_180:
-          return rotateImage(imageBitmap, 180);
+          return rotateImage(profilePictureBitmap, 180);
         case ExifInterface.ORIENTATION_ROTATE_270:
-          return rotateImage(imageBitmap, 270);
+          return rotateImage(profilePictureBitmap, 270);
         default:
-          return imageBitmap;
+          return profilePictureBitmap;
       }
     }
-    return imageBitmap;
+    return profilePictureBitmap;
   }
 
   private Bitmap rotateImage(Bitmap imageBitmap, int degree) {
@@ -60,11 +51,11 @@ public class ProfilePicture {
     this.profilePicturePath = profilePicturePath;
   }
 
-  public Bitmap getImageBitmap() {
-    return imageBitmap;
+  public Bitmap getProfilePictureBitmap() {
+    return profilePictureBitmap;
   }
 
-  public void setImageBitmap(Bitmap imageBitmap) {
-    this.imageBitmap = imageBitmap;
+  public void setProfilePictureBitmap(Bitmap profilePictureBitmap) {
+    this.profilePictureBitmap = profilePictureBitmap;
   }
 }
