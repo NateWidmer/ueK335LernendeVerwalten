@@ -10,7 +10,7 @@ public class Validator {
     public Validator() {
     }
 
-    //FUnction to Validate a Linked List of Text Fields
+    //Function to Validate a Linked List of Text Fields
     public boolean isValid(LinkedList<EditText> form) {
         boolean fieldsOK = false;
         for (EditText editText : form) {
