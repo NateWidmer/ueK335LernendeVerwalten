@@ -215,10 +215,11 @@ public class CreateActivity extends AppCompatActivity {
         return image;
     }
 
+    //Gets called after picture is taken
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        ProfilePicture profilePicture;
         super.onActivityResult(requestCode, resultCode, data);
+        ProfilePicture profilePicture;
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bitmap imageBitmap = BitmapFactory.decodeFile(profilePicturePath);
             profilePicture = new ProfilePicture(imageBitmap, profilePicturePath);
@@ -236,8 +237,8 @@ public class CreateActivity extends AppCompatActivity {
 
     //Change Activity
     private void openMainActivity() {
-        Intent intend = new Intent(this, MainActivity.class);
-        startActivity(intend);
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
 
