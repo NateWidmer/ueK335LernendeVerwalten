@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primaryNOA">#373737</color>
-    <color name="primaryDarkNOA">#242424</color>
-    <color name="secondaryNOA">#C9C9C9</color>
-    <color name="mainNOA">#7F7F7F</color>
-    <color name="whiteNOA">#FFFFFF</color>
-    <color name="errorNOA">#F44336</color>
+    <color name="primary_noa">#373737</color>
+    <color name="primary_dark_noa">#242424</color>
+    <color name="secondary_noa">#C9C9C9</color>
+    <color name="main_noa">#7F7F7F</color>
 </resources>
