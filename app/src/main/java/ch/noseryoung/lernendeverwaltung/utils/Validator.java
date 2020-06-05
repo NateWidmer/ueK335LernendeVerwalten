@@ -19,7 +19,7 @@ public class Validator {
                 fieldsOK = false;
             } else if (editText.getText().length() > 50) {
                 editText.setError("Die Eingabe ist zu lang (max 50 Zeichen)");
-            } else if (!Pattern.matches("[a-zA-Z]+", editText.getText())) {
+            } else if (!Pattern.matches("[a-zA-ZäöüÄÖÜ]+", editText.getText())) {
                 editText.setError("Es dürfen nur Buchstaben verwendet werden");
                 fieldsOK = false;
             } else {
