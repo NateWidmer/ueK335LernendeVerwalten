@@ -47,7 +47,7 @@ public class CreateActivity extends AppCompatActivity {
     Spinner spinner;
     FloatingActionButton saveButton;
     ImageButton profilePictureButton;
-    ImageView avatarPicture;
+    ImageView profilePicture;
     EditText firstName;
     EditText lastName;
     TextView firstNameLetterCount;
@@ -57,7 +57,7 @@ public class CreateActivity extends AppCompatActivity {
     private UserDao userDao;
 
     //For Camera
-    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
     String profilePicturePath;
 
     @Override
@@ -230,8 +230,8 @@ public class CreateActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            avatarPicture = findViewById(R.id.avatarPicture);
-            avatarPicture.setImageBitmap(imageBitmap);
+            this.profilePicture = findViewById(R.id.avatarPicture);
+            this.profilePicture.setImageBitmap(imageBitmap);
         }
     }
 
