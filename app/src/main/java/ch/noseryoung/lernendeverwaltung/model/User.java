@@ -10,12 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.room.*;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 import ch.noseryoung.lernendeverwaltung.R;
 
 @Entity(tableName = "users")
-public class User {
+public class User implements Serializable {
 
     @PrimaryKey
     @NonNull

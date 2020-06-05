@@ -90,8 +90,10 @@ public class MainActivity extends AppCompatActivity implements OnUserListener {
     //Change Activity
     @Override
     public void onUserClick(int position) {
+        Bundle userBundle = new Bundle();
+        userBundle.putSerializable("USER", userDao.getById(userDao.getAll().get(position).getId()));
         Intent intent = new Intent(this, DetailActivity.class);
-        intent.putExtra("USER_ID", userDao.getAll().get(position).getId());
+        intent.putExtras(userBundle);
         startActivity(intent);
     }
 

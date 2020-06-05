@@ -12,8 +12,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import ch.noseryoung.lernendeverwaltung.model.User;
-import ch.noseryoung.lernendeverwaltung.persistence.AppDatabase;
-import ch.noseryoung.lernendeverwaltung.persistence.UserDao;
 import ch.noseryoung.lernendeverwaltung.utils.ProfilePicture;
 
 import java.io.IOException;
@@ -26,17 +24,12 @@ public class DetailActivity extends AppCompatActivity {
     TextView company;
     ImageView profileView;
 
-    //Dao
-    UserDao userDao;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         //Get Current User
-        userDao = AppDatabase.getAppDb(getApplicationContext()).getUserDao();
-        String userID = getIntent().getStringExtra("USER_ID");
-        User currentUser = userDao.getById(userID);
+        User currentUser = (User) getIntent().getSerializableExtra("USER");
 
         //Set Title to Username
         this.setTitle(currentUser.getFirstName() + " " + currentUser.getLastName());
